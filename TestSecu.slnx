@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TestSecu.Domain/TestSecu.Domain.csproj" />
+  <Project Path="TestSecu.Infrastructure/TestSecu.Infrastructure.csproj" />
+  <Project Path="TestSecu/TestSecu.csproj" />
+</Solution>
