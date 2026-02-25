@@ -7,5 +7,6 @@ namespace TestSecu.Domain.Repositories
     public interface IAccountRepository
     {
         public Task<bool> Authenticate(string email, string password);
+        public Task<User> GetByEmail(string email) ;
     }
 }

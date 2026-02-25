@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-namespace TestSecu.Infrastructure.Dto
+namespace SecurityTools.Models
 {
     public class JwtSettings
     {

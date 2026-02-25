@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="SecuirtyTools/SecurityTools.csproj" Id="64c7468b-c24f-4140-a9e3-4d872565e866" />
   <Project Path="TestSecu.Domain/TestSecu.Domain.csproj" />
   <Project Path="TestSecu.Infrastructure/TestSecu.Infrastructure.csproj" />
   <Project Path="TestSecu/TestSecu.csproj" />
