@@ -13,32 +13,33 @@ namespace TestSecu.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountRepository _repository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IJWtService _jwtservice;
         private readonly IOptions<JwtSettings> _jwtSettings;
 
         public AccountController(IAccountRepository repository,IJWtService jWtService, IOptions<JwtSettings> jwtsetting)
         {
-            _repository = repository;
+            _accountRepository = repository;
             _jwtSettings = jwtsetting;
+            _jwtservice = jWtService;
         }
 
 
         [HttpPost]
         public async Task<IActionResult>Authenticate([FromBody]UserRequestDto requestDto)
-        {
-            //
-            //if (requestDto is  null || requestDto.Email is null || requestDto.Password is null) return BadRequest();
+        { 
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
             //Vérifier si user existe
-            if(await _repository.Authenticate(requestDto.Email, requestDto.Password))
+            if(await _accountRepository.Authenticate(requestDto.Email, requestDto.Password))
             {
                 //Générer mon token pour l'envoyer
                 //recupérer le user en "DB"
-                string token = 
+                User u = await _accountRepository.GetByEmail(requestDto.Email);
+                string token = await _jwtservice.GetToken(u.Id, _jwtSettings.Value);
                 return Ok( new { jwttoken = token });
             }
             else

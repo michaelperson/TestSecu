@@ -3,10 +3,16 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using SecurityTools.Models;
 using System.Text;
-using TestSecu.Domain.Repositories; 
+using TestSecu.Domain.Repositories;
+using TestSecu.Domain.Services;
+using TestSecu.Infrastructure.Persistence;
 using TestSecu.Infrastructure.Repositories;
+using TestSecu.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Récup de la connection string
+string cnstr = builder.Configuration.GetConnectionString("default")!;
 
 //Récup des infos jwt 
 
@@ -32,7 +38,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // Add services to the container.
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>(a=> new AccountRepository(cnstr));
+
+builder.Services.AddScoped<IJWtService, JwtService>();
+
+//Ok pour du test MAIS seul les repo ont besoin de dialoguer avec EF donc mon API n'en a pas besoin
+//builder.Services.AddDbContext<TestSecuDatacontext>(a => new TestSecuDatacontext(cnstr));
+
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
