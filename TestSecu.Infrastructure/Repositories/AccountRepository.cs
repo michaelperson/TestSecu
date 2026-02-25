@@ -38,5 +38,11 @@ namespace TestSecu.Infrastructure.Repositories
             if (!reg.IsMatch(email)) return default;
             return  users.FirstOrDefault(m => m.Email == email);
         }
+
+        public async Task<User> GetById(int userID)
+        {
+            if (userID <= 0) return default;
+            return users.FirstOrDefault(m => m.Id == userID);
+        }
     }
 }

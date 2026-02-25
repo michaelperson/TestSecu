@@ -8,5 +8,6 @@ namespace TestSecu.Domain.Repositories
     {
         public Task<bool> Authenticate(string email, string password);
         public Task<User> GetByEmail(string email) ;
+        Task<User> GetById(int userID);
     }
 }

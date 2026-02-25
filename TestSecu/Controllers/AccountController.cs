@@ -5,6 +5,7 @@ using SecurityTools;
 using SecurityTools.Models;
 using TestSecu.Domain;
 using TestSecu.Domain.Repositories;
+using TestSecu.Domain.Services;
 using TestSecu.dto; 
 namespace TestSecu.Controllers
 {
@@ -15,7 +16,7 @@ namespace TestSecu.Controllers
         private readonly IAccountRepository _repository;
         private readonly IOptions<JwtSettings> _jwtSettings;
 
-        public AccountController(IAccountRepository repository, IOptions<JwtSettings> jwtsetting)
+        public AccountController(IAccountRepository repository,IJWtService jWtService, IOptions<JwtSettings> jwtsetting)
         {
             _repository = repository;
             _jwtSettings = jwtsetting;
@@ -37,21 +38,7 @@ namespace TestSecu.Controllers
             {
                 //Générer mon token pour l'envoyer
                 //recupérer le user en "DB"
-                User u = await _repository.GetByEmail(requestDto.Email);
-                Dictionary<string,string> infos = new Dictionary<string,string>();
-                if(u.Id==2)
-                    infos.Add("Level", "9");
-                else
-
-                    infos.Add("Level", "10");
-                UserInfo ui = new UserInfo()
-                    {
-                        Id = u.Id.ToString(),
-                        Roles = new List<string> { "Admin", "Manager" },
-                        MetaData = infos
-
-                    };
-                string token = JwtHelper.Generate(_jwtSettings.Value,ui );
+                string token = 
                 return Ok( new { jwttoken = token });
             }
             else
