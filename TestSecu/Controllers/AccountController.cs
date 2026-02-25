@@ -52,7 +52,7 @@ namespace TestSecu.Controllers
 
                     };
                 string token = JwtHelper.Generate(_jwtSettings.Value,ui );
-                return Ok(token);
+                return Ok( new { jwttoken = token });
             }
             else
             {
