@@ -9,7 +9,7 @@ namespace TestSecu.Infrastructure.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        //Fakes users - rempalcés par la suite par l'accès DB
+        //Fakes users - remplacés par la suite par l'accès DB
         List<User> users = new List<User>()
             {
                 new User() { Id=1, Email="zorro@tftic.be", Password="Test1234=!" },
